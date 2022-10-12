@@ -3,15 +3,18 @@
     "webpack": "^5.74.0"
   },
   "devDependencies": {
+    "html-loader": "^4.2.0",
+    "html-webpack-plugin": "^5.5.0",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.11.1"
   },
   "name": "quran-project",
   "version": "1.0.0",
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack"
+    "start": "webpack-dev-server --config webpack.config.js --mode development --open",
+    "build": "webpack --config webpack.config.js"
   },
   "keywords": [],
   "author": "",
