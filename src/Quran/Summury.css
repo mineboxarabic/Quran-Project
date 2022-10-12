@@ -1,0 +1,22 @@
+bodySummury
+{
+    
+}
+.summuryElementBody
+{
+    display: inline-block;
+    background-color: red;
+    margin: 10px;
+    width: 30%;
+    
+}
+.summuryElementBody .numAya{
+    display: inline;
+    background-color: bisque;
+    font-size: 150%;
+}
+.summuryElementBody .numberSourah{
+    display: inline;
+    background-color: bisque;
+    font-size: 150%;
+}
