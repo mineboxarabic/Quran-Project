@@ -1,3 +1,8 @@
+
+@font-face {
+    font-family: 'English Arabic Style';
+    src: url(./Fonts/Arabic\ Ramadhan.otf);
+}
 .bodySummury
 {
  background-color: #76ba65;   
@@ -15,20 +20,23 @@
 }
 .summuryElementBody .numAya{
     display: inline;
-    background-color: bisque;
-    font-size: 150%;
+    font-size: 250%;
+    color: #59b777;
+    font-family: English Arabic Style;
 }
 .summuryElementBody .numberSourah{
     display: inline;
     font-size: 300%;
     text-align: center;
+    color: aliceblue;
     justify-content: center;
 }
 .summuryElementBody .nameSourah{
     display: inline;
-    background-color: bisque;
-    font-size: 150%;
+    font-family: English Arabic Style;
+    font-size: 200%;
     margin-left: 10%;
+
 }
 .summuryElementBody .backSquare
 {

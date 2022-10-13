@@ -15,7 +15,7 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack"
+    "start": "webpack-dev-server --config webpack.config.js --open"
   },
   "keywords": [],
   "author": "",
