@@ -44,7 +44,9 @@
     background-color: #2d5931;
     padding: 2.5% 5%;
     transform: rotateZ(0deg);
-    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    border-radius: 10%;
+    clip-path: polygon( 50% 0%, 100% 50%, 50% 100%,  0% 50%);
+    /*clip-path: circle(45% at 50% 50%);*/
     margin: 10px;
 }
 

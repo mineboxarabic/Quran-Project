@@ -19,7 +19,7 @@ export class Summury
         let i = 0;
         data.chapters.forEach(Sourah => {
             i++;
-            let s = new summuryElement(Sourah.name_simple,(i),`Sourah.verses_count`);
+            let s = new summuryElement(Sourah.name_simple,(i),`Ayat ${Sourah.verses_count}`);
             bodySummury.appendChild(s);
         })
         //let body = document.querySelector('body')
