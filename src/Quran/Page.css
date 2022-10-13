@@ -1,0 +1,50 @@
+@font-face {
+    font-family: 'Quran Font';
+    src: url(./Fonts/Al\ Qalam\ Quran\ Majeed.ttf);
+}
+button
+{
+    background-color: #508c41;
+    display: inline-block;
+    margin: 10px;
+    width: 10%;
+    font-size: 150%;
+    border-radius: 20px;
+    box-shadow: 4px 5px 0px 5px #2d5931;
+}
+button:hover
+{
+    color: white;
+    cursor: pointer;
+    transform: scale(1.1);
+    box-shadow: 0px 0px 5px 0px white;
+    transition: 0.3s;
+}
+.quranSection{
+    background-color: #76ba65;
+    padding: 20px;
+    margin: 10%;
+    direction: rtl;
+    text-align: right;
+    display: inline-block;
+    font-family: Quran Font;
+    border-radius: 100px;
+    color: rgb(32, 21, 37);
+}
+.ayah
+{
+    display: inline;
+    font-size: 150%;
+}
+.ayahSep
+{
+    font-size: 200%;
+    display: inline;
+}
+.ayah:hover
+{
+    cursor: pointer;
+    color: white;
+    text-shadow: 1px 1px 5px white;
+    transition: 0.3s;
+}

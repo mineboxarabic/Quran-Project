@@ -2,18 +2,19 @@ import { summuryElement } from "./SummuryElement";
 import './Summury.css'
 export class Summury
 {
-    async getSummuryData(body){
-        let url = 'https://api.quran.com/api/v4/chapters?language=fr'
+    constructor()
+    {
+    }
+    async getData(){
+        let url = 'https://api.quran.com/api/v4/chapters?language=en'
         const response = await fetch(url)
         const data = await response.json()
-        this.showData(data,body)
-        /*return fetch('https://api.quran.com/api/v4/chapters?language=fr')
-        .then(response => response.json())
-        .then(data => data)*/
+        this.data = data;
+        return data;
     }
-    showData(data,body)
+    async showData(body)
     {
-        console.log(data)
+        let data = await this.getData();
         let bodySummury = document.createElement('div');
         bodySummury.setAttribute("class","bodySummury");
         let i = 0;
@@ -22,13 +23,19 @@ export class Summury
             let s = new summuryElement(Sourah.name_simple,(i),`Ayat ${Sourah.verses_count}`);
             bodySummury.appendChild(s);
         })
-        //let body = document.querySelector('body')
         body.appendChild(bodySummury)
     }
-    constructor(body)
+    async getSummury()
     {
-       this.getSummuryData(body);
+        let i = 0;
+        let summuryList = [];
+        let data = await this.getData();
+        data.chapters.forEach(Sourah => {
+            summuryList.push(Sourah.name_simple);
+        })
+        return summuryList
     }
+
     //fetch data from api https://api.quran.com/api/v4/chapters?language=en
 
 
