@@ -1,6 +1,11 @@
 import { Summury } from './Summury';
 export class Quran
 {
+    /*async getSourahByname(name)
+    {
+        let sourah = this.quranData.chapters.find(sourah => sourah.name == name)
+        return sourah;
+    }*/
     async isSourah(Sourah){
         const summury = new Summury()
         let data = await summury.getData();
@@ -13,7 +18,7 @@ export class Quran
     }
     constructor()
     {
-        console.log('test')
+        console.log('Quran Constucted')
         this.quranData = this.getQuranData();
     }
     async getQuranData()

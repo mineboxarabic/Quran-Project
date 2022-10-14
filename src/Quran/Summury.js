@@ -4,12 +4,12 @@ export class Summury
 {
     constructor()
     {
+        console.log('Summury Constucted')
     }
     async getData(){
         let url = 'https://api.quran.com/api/v4/chapters?language=en'
         const response = await fetch(url)
         const data = await response.json()
-        this.data = data;
         return data;
     }
     async showData(body)

@@ -8,6 +8,7 @@ export class Page
         let quran = new Quran();
         if(quran.isSourah(Sourah))
         {
+
             let sourahArray = await quran.getSourah(Sourah)
             sourahArray.data.ayahs.forEach(ayah => {
                 let ayahElement = document.createElement('p')
@@ -21,39 +22,32 @@ export class Page
             })
         }
     }
-    async createComboBox()
+    async createComboBox(body)
     {
-        let body = document.querySelector('body'); // get the body element
         this.ComboBox = document.createElement('select') // create select element <ComboBox> to select a sourah from the page of the quran
         this.ComboBox.setAttribute('class','ComboBoxSourahs') // set class name for the combobox element
-
-        let sourahs = await this.summury.getSummury()
-        sourahs.forEach(sourah => {
-            let option = document.createElement('option')
-            option.setAttribute('value',sourah)
-            option.textContent = sourah
-            this.ComboBox.appendChild(option)
-        })
         body.appendChild(this.ComboBox);
-
+        let sourahs = await this.summury.getSummury()
+        let i = 0;
+        sourahs.forEach(sourah => {
+            i++;
+            let option = document.createElement('option');
+            option.setAttribute('value',i);
+            option.textContent = sourah;
+            this.ComboBox.onchange = () => {
+                while(this.quranSection.firstChild)
+                {
+                    this.quranSection.removeChild(this.quranSection.lastChild);
+                }
+                this.fillSourah(parseInt(this.ComboBox.value))
+            }
+            this.ComboBox.appendChild(option);
+            
+        })
+    
     }
-    constructor(Sourah,body)
+    createButton(body)
     {
-        this.quran = new Quran();
-        this.summury = new Summury();
-
-        this.createComboBox();
-        this.fillSourah(Sourah)
-
-        
-        this.page = document.createElement('div') // create div element <page> to contain the page of the quran
-        this.page.setAttribute('class','page') // set class name for the page element
-
-
-        this.quranSection = document.createElement('div') // create div element <quranSection> to contain the quran section of the page
-        this.quranSection.setAttribute('class','quranSection') // set class name for the quranSection element
-
-
         this.backButton = document.createElement('button') // create button element <backButton> to go back to the summury page
         this.backButton.setAttribute('class','backButton')  // set class name for the backButton element
         this.backButton.textContent = 'Back'
@@ -65,10 +59,27 @@ export class Page
             summury.showData(body)
             
         }
-
-
-
         body.appendChild(this.backButton)
+    }
+    constructor(Sourah,body)
+    {
+        
+        this.summury = new Summury();
+
+        this.createButton(body);
+        this.createComboBox(body);
+        this.fillSourah(Sourah);
+        
+        this.quran = new Quran();
+
+        
+        this.page = document.createElement('div') // create div element <page> to contain the page of the quran
+        this.page.setAttribute('class','page') // set class name for the page element
+
+
+        this.quranSection = document.createElement('div') // create div element <quranSection> to contain the quran section of the page
+        this.quranSection.setAttribute('class','quranSection') // set class name for the quranSection element
+
         this.page.appendChild(this.quranSection)
         body.appendChild(this.page)
     }
