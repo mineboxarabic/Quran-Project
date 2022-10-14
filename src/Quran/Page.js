@@ -6,11 +6,27 @@ export class Page
     async fillSourah(Sourah)
     {
         let quran = new Quran();
+
         if(quran.isSourah(Sourah))
         {
 
             let sourahArray = await quran.getSourah(Sourah)
-            sourahArray.data.ayahs.forEach(ayah => {
+            let header = document.createElement('h1')
+            let ayaArray = sourahArray.data.ayahs;
+            for(let i = 0 ; i <= ayaArray.length ; i++)
+            {
+                
+                console.log(ayaArray[0].text.substring(0,20))
+                let ayahElement = document.createElement('p')
+                ayahElement.setAttribute('class','ayah')
+                let ayahSep = document.createElement('p')
+                ayahSep.setAttribute('class','ayahSep')
+                ayahElement.textContent = ayaArray[i].text
+                ayahSep.textContent = `{${ayaArray[i].numberInSurah}}`
+                this.quranSection.appendChild(ayahElement)
+                this.quranSection.appendChild(ayahSep)
+            }
+            /*sourahArray.data.ayahs.forEach(ayah => {
                 let ayahElement = document.createElement('p')
                 ayahElement.setAttribute('class','ayah')
                 let ayahSep = document.createElement('p')
@@ -19,7 +35,7 @@ export class Page
                 ayahSep.textContent = `{${ayah.numberInSurah}}`
                 this.quranSection.appendChild(ayahElement)
                 this.quranSection.appendChild(ayahSep)
-            })
+            })*/
         }
     }
     async createComboBox(body)
