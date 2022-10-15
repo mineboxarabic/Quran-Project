@@ -3,31 +3,47 @@ import { Summury } from './Summury';
 import { Quran } from './Quran';
 export class Page
 {
+    addSep(ayaArray,i)
+    {
+        let currentPage = ayaArray[i - 1].page
+        if(i < ayaArray.length){
+            if(currentPage != ayaArray[i].page)
+            {
+                let sep =document.createElement('hr')
+                sep.setAttribute('class','sepPage')
+                this.quranSection.appendChild(sep)
+            }
+        }
+    }
     async fillSourah(Sourah)
     {
         let quran = new Quran();
 
         if(quran.isSourah(Sourah))
         {
-
             let sourahArray = await quran.getSourah(Sourah)
             let header = document.createElement('h1')
+            header.textContent = 'g'
+            header.setAttribute('class','headerBSM')
+            this.quranSection.appendChild(header)
             let ayaArray = sourahArray.data.ayahs;
-            for(let i = 0 ; i <= ayaArray.length ; i++)
-            {
-                
-                console.log(ayaArray[0].text.substring(0,20))
+            let i = 0;
+            
+            sourahArray.data.ayahs.forEach(ayah => {
+                i++;
+                this.addSep(ayaArray,i)
+                console.log(ayah)
+                sourahArray.data.ayahs[0].text = sourahArray.data.ayahs[0].text.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ"," ")
                 let ayahElement = document.createElement('p')
-                ayahElement.setAttribute('class','ayah')
-                let ayahSep = document.createElement('p')
-                ayahSep.setAttribute('class','ayahSep')
-                ayahElement.textContent = ayaArray[i].text
-                ayahSep.textContent = `{${ayaArray[i].numberInSurah}}`
-                this.quranSection.appendChild(ayahElement)
-                this.quranSection.appendChild(ayahSep)
-            }
-            /*sourahArray.data.ayahs.forEach(ayah => {
-                let ayahElement = document.createElement('p')
+                ayahElement.onclick = async function() {
+                    let audioAyahUrl = await fetch(`https://api.quran.com/api/v4/recitations/10/by_chapter/${Sourah}`)
+                    let audioAyahData = await audioAyahUrl.json()
+                    console.log(audioAyahData.audio_files[0].url)
+                    //console.log(await audioAyahUrl.json())
+                    console.log(ayah.numberInSurah - 1)
+                    let audio = new Audio(`https://verses.quran.com/${audioAyahData.audio_files[ayah.numberInSurah - 1].url}`)
+                    audio.play()
+                }
                 ayahElement.setAttribute('class','ayah')
                 let ayahSep = document.createElement('p')
                 ayahSep.setAttribute('class','ayahSep')
@@ -35,7 +51,8 @@ export class Page
                 ayahSep.textContent = `{${ayah.numberInSurah}}`
                 this.quranSection.appendChild(ayahElement)
                 this.quranSection.appendChild(ayahSep)
-            })*/
+                
+            })
         }
     }
     async createComboBox(body)

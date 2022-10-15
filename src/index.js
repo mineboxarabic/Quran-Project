@@ -5,7 +5,7 @@ import { Page } from './Quran/Page.js'
 import './style.css'
 
 let body = document.querySelector('body');
-const page = new Page(5,body);
+const page = new Page(1,body);
 //const summury = new Summury()
 //summury.showData(body)
 //console.log(summury.getSummuryData())
