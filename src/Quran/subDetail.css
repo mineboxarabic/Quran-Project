@@ -2,12 +2,12 @@
 {
     from
     {
-        transform: translateY(500%);
+        margin-top: 50%;
         opacity: 0;
     }
     to
     {
-        transform: translateY(320%);
+        margin-top: 39%;
         opacity: 1;
     }
 }
@@ -17,8 +17,26 @@
     position: fixed;
     background-color: green;
     padding: 1% 43%;
-    transform: translateY(320%);
-    width: 200px;
+    margin-top: 39%;
+    width: 54%;
     border-radius: 20px;
     animation: append-animated .3s linear;
+    padding-left: 2%;
+}
+.removeDetailSection
+{
+    background-color: #508c41;
+    display: inline-block;
+    margin: 10px;
+    font-size: 150%;
+    border-radius: 20px;
+    box-shadow: 1px 1px 0px 1px #2d5931;
+}
+.removeDetailSection:hover
+{
+    color: red;
+    cursor: pointer;
+    transform: scale(1.1);
+    box-shadow: 0px 0px 5px 0px red;
+    transition: 0.3s;
 }

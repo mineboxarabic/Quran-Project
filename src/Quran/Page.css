@@ -25,7 +25,7 @@ body
     display: block;
     margin: -40px;
 }
-button
+.backButton
 {
     background-color: #508c41;
     display: inline-block;
@@ -35,7 +35,7 @@ button
     border-radius: 20px;
     box-shadow: 4px 5px 0px 5px #2d5931;
 }
-button:hover
+.backButton:hover
 {
     color: white;
     cursor: pointer;

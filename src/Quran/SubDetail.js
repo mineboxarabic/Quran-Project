@@ -5,7 +5,6 @@ export class subDetails
     {
         this.detailSection = document.createElement('div')
         this.detailSection.setAttribute('class','detailSection')
-        this.detailSection.innerHTML = '<p>test suuuu</p>'
 
 
         this.removeDetailSection = document.createElement('button')
