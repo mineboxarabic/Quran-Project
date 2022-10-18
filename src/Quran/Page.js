@@ -41,8 +41,10 @@ export class Page
                     console.log(audioAyahData.audio_files[0].url)
                     //console.log(await audioAyahUrl.json())
                     console.log(ayah.numberInSurah - 1)
+
                     let audio = new Audio(`https://verses.quran.com/${audioAyahData.audio_files[ayah.numberInSurah - 1].url}`)
-                    audio.play()
+                    if(audio.paused)
+                        audio.play()
                 }
                 ayahElement.setAttribute('class','ayah')
                 let ayahSep = document.createElement('p')
