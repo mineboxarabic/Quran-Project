@@ -45,10 +45,22 @@ export class Page
                     let audioAyahUrl = await fetch(`https://api.quran.com/api/v4/recitations/3/by_ayah/${ayah.number}`)
                     let audioAyahData = await audioAyahUrl.json()
                     console.log(audioAyahData.audio_files[0].url)
-                    //console.log(await audioAyahUrl.json())
-                    console.log(ayah.numberInSurah - 1)
-                    let audio = new Audio(`https://verses.quran.com/${audioAyahData.audio_files[ayah.numberInSurah - 1].url}`)
+                    //Adding the audio and playing it
+                    function stopAudio() {
+                        let audio = document.querySelector('audio')
+                        if(audio != null)
+                        {
+                            audio.pause()
+                            audio.remove()
+                        }
+                    }
+                    
+                    stopAudio();
+                    let audio = document.createElement('audio')
+                    audio.src = `https://verses.quran.com/${audioAyahData.audio_files[0].url}`
+                    document.querySelector('body').appendChild(audio)
                     audio.play()
+
                 }
                 ayahElement.setAttribute('class','ayah')
                 let ayahSep = document.createElement('p')
