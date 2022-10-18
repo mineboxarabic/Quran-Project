@@ -4,7 +4,21 @@ export class Summury
 {
     constructor()
     {
-        console.log('Summury Constucted')
+        let body = document.querySelector('body');
+        this.elementArray = [];
+        this.search = document.createElement('input')
+        this.search.setAttribute('class','search')
+        this.search.setAttribute('placeholder','Search')
+        this.search.onkeyup = () => 
+        {
+            let searchValue = this.search.value
+            this.showData(searchValue,document.querySelector('.bodySummury'))
+        }
+        this.bodySummury = document.createElement('div');
+        this.bodySummury.setAttribute("class","bodySummury");
+        body.appendChild(this.search)
+        body.appendChild(this.bodySummury);
+        
     }
     async getData(){
         let url = 'https://api.quran.com/api/v4/chapters?language=en'
@@ -12,7 +26,41 @@ export class Summury
         const data = await response.json()
         return data;
     }
-    async showData(body)
+    async fillSummury()
+    {
+        let data = await this.getData();
+        let i = 0;
+        data.chapters.forEach(Sourah => {
+            i++;
+            let s = new summuryElement(Sourah.name_simple,(i),`Ayat ${Sourah.verses_count}`);
+            this.elementArray.push(s);
+        })
+        return this.elementArray
+    }
+    async showData(searchValue,body)
+    {   
+        let array =await this.fillSummury();
+        array.forEach(element => {
+            if(element.querySelector('.nameSourah').textContent.includes(searchValue) ||searchValue == '')
+            {
+                if(body.contains(element))
+                {
+                    element.remove()
+                }else
+                {
+                    console.log(element.querySelector('.nameSourah').textContent)
+                    body.appendChild(element)
+                    
+                }
+
+            }
+            else
+            {
+                element.remove()
+            }
+        })
+    }
+    /*async showData(body)
     {
         let data = await this.getData();
         let bodySummury = document.createElement('div');
@@ -24,7 +72,7 @@ export class Summury
             bodySummury.appendChild(s);
         })
         body.appendChild(bodySummury)
-    }
+    }*/
     async getSummury()
     {
         let i = 0;

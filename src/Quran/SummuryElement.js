@@ -1,25 +1,18 @@
 import { Quran } from "./Quran";
 import { Page } from "./Page";
-export class summuryElement 
-{   static numberSourah = 0;
-    clicked(id)
-    {
-        let body = document.querySelector('body');
-        while (body.firstChild) {
-            body.removeChild(body.lastChild);
-        }
-        const page = new Page(id,document.querySelector('body'));
-
-    }
-    constructor(nameSourah,numberSourah,numberAya)
-    {
-        
+export let summuryElement = function (nameSourah, numberSourah, numberAya) {   
+        let nameSou = nameSourah;
         this.elementBody = document.createElement('a');
         this.elementBody.setAttribute("class","summuryElementBody");
         this.elementBody.setAttribute("data-id",numberSourah);
-        this.elementBody.onclick = () => this.clicked(numberSourah-1);
-
-        
+        this.elementBody.onclick = () => {
+            let body = document.querySelector('body');
+            while (body.firstChild) {
+                body.removeChild(body.lastChild);
+            }
+            const page = new Page(numberSourah - 1,document.querySelector('body'));
+    
+        };
         this.numAyaH = document.createElement('p');
         this.numAyaH.setAttribute("class","numAya");
         this.numberSourahH = document.createElement('h3');
@@ -38,5 +31,5 @@ export class summuryElement
         numberSourah++;
 
         return this.elementBody;
-    }
+
 } 

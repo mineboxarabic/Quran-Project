@@ -108,7 +108,7 @@ export class Page
                 body.removeChild(body.lastChild);
             }
             const summury = new Summury()
-            summury.showData(body)
+            summury.showData('',document.querySelector('.bodySummury'))
             
         }
         body.appendChild(this.backButton)

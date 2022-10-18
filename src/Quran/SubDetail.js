@@ -1,6 +1,16 @@
 import './subDetail.css';
 export class subDetails 
 {
+    async fillDetailSection(aya)
+    {
+        let data = await Quran.getTranslationAyah(aya)
+        console.log(data)
+        let ayaTranslation = data.data[2].text
+        console.log(ayaTranslation)
+        this.detailSection.innerHTML = `
+        <p class = "ayaTranslation">${ayaTranslation}</p>
+        `
+    }
     constructor(aya)
     {
         this.detailSection = document.createElement('div')
@@ -18,4 +28,5 @@ export class subDetails
         let body = document.querySelector('body')
         body.insertBefore(this.detailSection,document.querySelector('.page'))
     }
+
 }

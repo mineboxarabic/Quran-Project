@@ -28,6 +28,12 @@ export class Quran
         const data = await response.json()
         return data
     }
+    static async  getTranslationAyah(aya)
+    {
+        let response = await fetch(`http://api.alquran.cloud/v1/ayah/${aya}/editions/quran-uthmani,en.asad,en.pickthall`)
+        let data = await response.json()
+        return data
+    }
     async getSourah(Sourah)
     {
         let SourahRe;
