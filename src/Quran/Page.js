@@ -1,6 +1,7 @@
 import './Page.css';
 import { Summury } from './Summury';
 import { Quran } from './Quran';
+import { subDetails } from './SubDetail';
 export class Page
 {
     addSep(ayaArray,i)
@@ -29,22 +30,25 @@ export class Page
             let ayaArray = sourahArray.data.ayahs;
             let i = 0;
             
+            //Filling the ayahs of the sourah in the page of the quran with ayahs and their number and their audio
             sourahArray.data.ayahs.forEach(ayah => {
                 i++;
                 this.addSep(ayaArray,i)
-                console.log(ayah)
                 sourahArray.data.ayahs[0].text = sourahArray.data.ayahs[0].text.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ"," ")
                 let ayahElement = document.createElement('p')
                 ayahElement.onclick = async function() {
-                    let audioAyahUrl = await fetch(`https://api.quran.com/api/v4/recitations/10/by_chapter/${Sourah}`)
+                    if(document.querySelector('.detailSection') != null){
+                        document.querySelector('.detailSection').remove()
+                    }
+                    let subDetail = new subDetails(ayah)
+                        
+                    let audioAyahUrl = await fetch(`https://api.quran.com/api/v4/recitations/3/by_ayah/${ayah.number}`)
                     let audioAyahData = await audioAyahUrl.json()
                     console.log(audioAyahData.audio_files[0].url)
                     //console.log(await audioAyahUrl.json())
                     console.log(ayah.numberInSurah - 1)
-
                     let audio = new Audio(`https://verses.quran.com/${audioAyahData.audio_files[ayah.numberInSurah - 1].url}`)
-                    if(audio.paused)
-                        audio.play()
+                    audio.play()
                 }
                 ayahElement.setAttribute('class','ayah')
                 let ayahSep = document.createElement('p')
@@ -67,6 +71,7 @@ export class Page
         sourahs.forEach(sourah => {
             i++;
             let option = document.createElement('option');
+            option.setAttribute('class','optionComboBox')
             option.setAttribute('value',i);
             option.textContent = sourah;
             this.ComboBox.onchange = () => {

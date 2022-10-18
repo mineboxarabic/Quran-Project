@@ -6,6 +6,10 @@
     font-family: 'Quran Font Bismillah';
     src: url(./Fonts/110_Besmellah_[Takmob.Net].TTF);
 }
+body 
+{
+    background-color: #d2eeb5;
+}
 .sepPage{
     background: #2d5931;
     color: #2d5931;
@@ -21,7 +25,7 @@
     display: block;
     margin: -40px;
 }
-button
+.backButton
 {
     background-color: #508c41;
     display: inline-block;
@@ -31,7 +35,7 @@ button
     border-radius: 20px;
     box-shadow: 4px 5px 0px 5px #2d5931;
 }
-button:hover
+.backButton:hover
 {
     color: white;
     cursor: pointer;
@@ -66,4 +70,25 @@ button:hover
     color: white;
     text-shadow: 1px 1px 5px white;
     transition: 0.3s;
+}
+.ComboBoxSourahs
+{
+    background-color: #508c41;
+    display: inline-block;
+    margin: 10px;
+    width: 20%;
+    font-size: 150%;
+    border-radius: 20px;
+    box-shadow: 4px 5px 0px 5px #2d5931;
+}
+.ComboBoxSourahs:hover
+{
+    color: white;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px 0px white;
+    transition: 0.3s;
+}
+.optionComboBox
+{
+    
 }
