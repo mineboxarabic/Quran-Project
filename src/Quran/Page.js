@@ -4,6 +4,7 @@ import { Quran } from './Quran';
 import { subDetails } from './SubDetail';
 export class Page
 {
+
     addSep(ayaArray,i)
     {
         let currentPage = ayaArray[i - 1].page
@@ -27,6 +28,7 @@ export class Page
             header.textContent = 'g'
             header.setAttribute('class','headerBSM')
             this.quranSection.appendChild(header)
+            console.log(Sourah)
             let ayaArray = sourahArray.data.ayahs;
             let i = 0;
             
@@ -40,9 +42,9 @@ export class Page
                     if(document.querySelector('.detailSection') != null){
                         document.querySelector('.detailSection').remove()
                     }
-                    let subDetail = new subDetails(ayah)
+                    let subDetail = new subDetails(ayah.number)
                         
-                    let audioAyahUrl = await fetch(`https://api.quran.com/api/v4/recitations/3/by_ayah/${ayah.number}`)
+                    let audioAyahUrl = await fetch(`https://api.quran.com/api/v4/recitations/10/by_ayah/${ayah.number}`)
                     let audioAyahData = await audioAyahUrl.json()
                     console.log(audioAyahData.audio_files[0].url)
                     //Adding the audio and playing it
@@ -54,12 +56,13 @@ export class Page
                             audio.remove()
                         }
                     }
-                    
                     stopAudio();
                     let audio = document.createElement('audio')
                     audio.src = `https://verses.quran.com/${audioAyahData.audio_files[0].url}`
                     document.querySelector('body').appendChild(audio)
                     audio.play()
+
+                    
 
                 }
                 ayahElement.setAttribute('class','ayah')
@@ -105,7 +108,10 @@ export class Page
         this.backButton.textContent = 'Back'
         this.backButton.onclick = () => {
             while (body.firstChild) {
-                body.removeChild(body.lastChild);
+                if(body.firstChild != document.getElementById('SourahSummuryTemp'))
+                {
+                    body.removeChild(body.lastChild);
+                }
             }
             const summury = new Summury()
             summury.showData('',document.querySelector('.bodySummury'))

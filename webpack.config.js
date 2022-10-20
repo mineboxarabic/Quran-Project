@@ -8,7 +8,11 @@ module.exports =
         path: path.join(__dirname, 'dist'),
         filename: 'mains.js'
     },
-    plugins: [new HtmlWebpackPlugin()],
+    plugins: [new HtmlWebpackPlugin({
+        template: './src/index.html'
+    }
+        
+    )],
     module: {
         rules: [
             {

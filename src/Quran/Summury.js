@@ -1,10 +1,30 @@
-import { summuryElement } from "./SummuryElement";
+//import { summuryElement } from "./SummuryElement";
+import { Page } from "./Page";
 import './Summury.css'
+let summuryElement = function (nameSourah, numberSourah, numberAya) 
+{   
+  let body = document.querySelector('body');
+  const elementBody = document.querySelector('template').content.cloneNode(true);
+  elementBody.querySelector('.summuryElementBody').setAttribute("data-id",numberSourah);
+  elementBody.querySelector('.summuryElementBody').onclick = () => {
+  while (body.firstChild) {
+          body.removeChild(body.lastChild);  
+            
+  }
+      const page = new Page(numberSourah,document.querySelector('body'));
+  };
+  elementBody.querySelector('.numAya').textContent = numberAya;
+  elementBody.querySelector('.numberSourah').textContent = numberSourah;
+  elementBody.querySelector('.nameSourah').textContent = nameSourah;
+  return elementBody;
+} 
 export class Summury
 {
     constructor()
     {
+
         let body = document.querySelector('body');
+    
         this.elementArray = [];
         this.search = document.createElement('input')
         this.search.setAttribute('class','search')
@@ -16,6 +36,17 @@ export class Summury
         }
         this.bodySummury = document.createElement('div');
         this.bodySummury.setAttribute("class","bodySummury");
+        this.bodySummury.innerHTML += `
+        <template id="SourahSummuryTemp" >
+        <a data-id="" class="summuryElementBody">
+          <div class="backSquare">
+            <h3 class="numberSourah"></h3>
+          </div>
+          <p class="numAya"></p>
+          <h3 class="nameSourah"></h3>
+        </a>
+      </template>
+        `
         body.appendChild(this.search)
         body.appendChild(this.bodySummury);
         
@@ -48,7 +79,7 @@ export class Summury
                     element.remove()
                 }else
                 {
-                    console.log(element.querySelector('.nameSourah').textContent)
+                    //console.log(element.querySelector('.nameSourah').textContent)
                     body.appendChild(element)
                     
                 }

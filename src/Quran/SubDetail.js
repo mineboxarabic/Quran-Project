@@ -1,9 +1,10 @@
 import './subDetail.css';
+import { Quran } from './Quran';
 export class subDetails 
 {
     async fillDetailSection(aya)
     {
-        let data = await Quran.getTranslationAyah(aya)
+        let data = await Quran.getTranslationAyah(aya);
         console.log(data)
         let ayaTranslation = data.data[2].text
         console.log(ayaTranslation)
@@ -27,6 +28,7 @@ export class subDetails
         
         let body = document.querySelector('body')
         body.insertBefore(this.detailSection,document.querySelector('.page'))
+        this.fillDetailSection(aya)
     }
 
 }

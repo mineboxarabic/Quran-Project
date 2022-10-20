@@ -36,18 +36,14 @@ export class Quran
     }
     async getSourah(Sourah)
     {
-        let SourahRe;
         if(Sourah > 0 && Sourah < 115)
         {
             if (typeof Sourah === 'number')
             {
-                SourahRe = async function()
-                {
-                    let url = 'http://api.alquran.cloud/v1/surah/' + Sourah + '/ar.asad'
-                    const response = await fetch(url)
-                    const data = await response.json()
-                    return data
-                }()
+                let url = 'http://api.alquran.cloud/v1/surah/' + Sourah + '/ar.asad'
+                const response = await fetch(url)
+                const data = await response.json()
+                return data
             }
             else
             {
@@ -57,7 +53,6 @@ export class Quran
         {
             console.log('Sourah not found')
         }
-        return SourahRe;
     }
     getEditions()
     {
