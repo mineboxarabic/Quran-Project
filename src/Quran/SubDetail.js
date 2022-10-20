@@ -5,19 +5,20 @@ export class subDetails
     async fillDetailSection(aya)
     {
         let data = await Quran.getTranslationAyah(aya);
-        console.log(data)
         let ayaTranslation = data.data[2].text
         console.log(ayaTranslation)
-        this.detailSection.innerHTML = `
+        /*this.detailSection.innerHTML += `
         <p class = "ayaTranslation">${ayaTranslation}</p>
-        `
+        `*/
+        let p = document.createElement('p')
+        p.setAttribute('class','ayaTranslation')
+        p.textContent = ayaTranslation
+        this.detailSection.appendChild(p)
     }
     constructor(aya)
     {
         this.detailSection = document.createElement('div')
         this.detailSection.setAttribute('class','detailSection')
-
-
         this.removeDetailSection = document.createElement('button')
         this.removeDetailSection.setAttribute('class','removeDetailSection')
         this.removeDetailSection.textContent = 'X'

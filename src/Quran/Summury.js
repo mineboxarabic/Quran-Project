@@ -9,7 +9,6 @@ let summuryElement = function (nameSourah, numberSourah, numberAya)
   elementBody.querySelector('.summuryElementBody').onclick = () => {
   while (body.firstChild) {
           body.removeChild(body.lastChild);  
-            
   }
       const page = new Page(numberSourah,document.querySelector('body'));
   };
@@ -17,7 +16,7 @@ let summuryElement = function (nameSourah, numberSourah, numberAya)
   elementBody.querySelector('.numberSourah').textContent = numberSourah;
   elementBody.querySelector('.nameSourah').textContent = nameSourah;
   return elementBody;
-} 
+}
 export class Summury
 {
     constructor()

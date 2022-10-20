@@ -26,8 +26,9 @@
 .removeDetailSection
 {
     background-color: #508c41;
-    display: inline-block;
+    display: inline;
     margin: 10px;
+    width: 10%;
     font-size: 150%;
     border-radius: 20px;
     box-shadow: 1px 1px 0px 1px #2d5931;
