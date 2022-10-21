@@ -23,19 +23,7 @@ export class Summury
     {
 
         let body = document.querySelector('body');
-    
-        this.elementArray = [];
-        this.search = document.createElement('input')
-        this.search.setAttribute('class','search')
-        this.search.setAttribute('placeholder','Search')
-        this.search.onkeyup = () => 
-        {
-            let searchValue = this.search.value
-            this.showData(searchValue,document.querySelector('.bodySummury'))
-        }
-        this.bodySummury = document.createElement('div');
-        this.bodySummury.setAttribute("class","bodySummury");
-        this.bodySummury.innerHTML += `
+        body.innerHTML += `
         <template id="SourahSummuryTemp" >
         <a data-id="" class="summuryElementBody">
           <div class="backSquare">
@@ -44,21 +32,23 @@ export class Summury
           <p class="numAya"></p>
           <h3 class="nameSourah"></h3>
         </a>
-      </template>
+        </template>
+        <div class = "bodySummury">
+            <input class= "search" placeholder = "Search"></input>
+            <div class="SourahsContainer"></div>
+        </div>
         `
-        body.appendChild(this.search)
-        body.appendChild(this.bodySummury);
+        document.querySelector('.search').onkeyup = () => {
+            let searchValue = this.search.value
+            this.showData(searchValue,document.querySelector('.bodySummury'))
+        }
+        this.elementArray = [];
         
     }
-    async getData(){
-        let url = 'https://api.quran.com/api/v4/chapters?language=en'
-        const response = await fetch(url)
-        const data = await response.json()
-        return data;
-    }
+
     async fillSummury()
     {
-        let data = await this.getData();
+        let data = await Summury.getData();
         let i = 0;
         data.chapters.forEach(Sourah => {
             i++;
@@ -67,43 +57,21 @@ export class Summury
         })
         return this.elementArray
     }
-    async showData(searchValue,body)
+    async showData(searchValue)
     {   
         let array =await this.fillSummury();
         array.forEach(element => {
             if(element.querySelector('.nameSourah').textContent.includes(searchValue) ||searchValue == '')
-            {
-                if(body.contains(element))
-                {
-                    element.remove()
-                }else
-                {
-                    //console.log(element.querySelector('.nameSourah').textContent)
-                    body.appendChild(element)
-                    
-                }
-
-            }
-            else
-            {
-                element.remove()
-            }
+                document.querySelector('.SourahsContainer').appendChild(element)
         })
     }
-    /*async showData(body)
-    {
-        let data = await this.getData();
-        let bodySummury = document.createElement('div');
-        bodySummury.setAttribute("class","bodySummury");
-        let i = 0;
-        data.chapters.forEach(Sourah => {
-            i++;
-            let s = new summuryElement(Sourah.name_simple,(i),`Ayat ${Sourah.verses_count}`);
-            bodySummury.appendChild(s);
-        })
-        body.appendChild(bodySummury)
-    }*/
-    async getSummury()
+    static async getData(){
+        let url = 'https://api.quran.com/api/v4/chapters?language=en'
+        const response = await fetch(url)
+        const data = await response.json()
+        return data;
+    }
+    static async getSummury()
     {
         let i = 0;
         let summuryList = [];
