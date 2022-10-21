@@ -34,9 +34,9 @@ export class Page {
                 
                 let ayahElement = document.createElement('p')
                 ayahElement.onclick = async function () {
-                    /*if (document.querySelector('.detailSection') != null) {
+                    if (document.querySelector('.detailSection') != null) {
                         document.querySelector('.detailSection').remove()
-                    }*/
+                    }
                     console.log('test')
                     let audioAyahUrl = await fetch(`https://api.quran.com/api/v4/recitations/10/by_ayah/${ayah.number}`)
                     let audioAyahData = await audioAyahUrl.json()

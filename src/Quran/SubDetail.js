@@ -3,9 +3,9 @@ import { Quran } from './Quran';
 
 export class SubDetails{
 
-    async fillSub()
+    async fillSub(aya)
     {
-        let data = await Quran.getTranslationAyah(this.aya);
+        let data = await Quran.getTranslationAyah(aya);
         let ayaTranslation = data.data[2].text
         console.log(ayaTranslation)
     
@@ -13,26 +13,22 @@ export class SubDetails{
         p.textContent = ayaTranslation
     }
     constructor (aya) {
-        this.aya = aya;
-        let body = document.querySelector('body')
-        
-        if(document.querySelector('.detailSection') != null){
-            document.querySelector('.detailSection').remove();
-        }
-        body.innerHTML += `
-        <div class="detailSection">
-            <button class="removeDetailSection">X</button>
-            <p class="ayaText"></p>
-        </div>
+        console.log('testtest')
+        let body =  document.querySelector('body');
+
+        this.detailSection = document.createElement('div')
+        this.detailSection.setAttribute("class","detailSection")
+        this.detailSection.innerHTML = `
+        <button class="removeDetailSection">X</button>
+        <p class="ayaText"></p>
         `
-        this.detailSection = document.querySelector('.detailSection');
-        document.querySelector('.removeDetailSection').onclick = () => {
-            this.detailSection.remove()
+
+        this.fillSub(aya)
+        let backButton = this.detailSection.querySelector('.removeDetailSection')
+        backButton.onclick = function () {
+            document.querySelector('.detailSection').remove()
         }
-    
-        body.insertBefore(document.querySelector('.detailSection'), document.querySelector('.page'))
-    
-        
+        document.querySelector('body').insertBefore(this.detailSection, document.querySelector('.page'))
     }
 
 }

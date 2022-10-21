@@ -54,6 +54,7 @@ export class Summury
             i++;
             let s = new summuryElement(Sourah.name_simple,(i),`Ayat ${Sourah.verses_count}`);
             this.elementArray.push(s);
+            document.querySelector('.SourahsContainer').appendChild(s);
         })
         return this.elementArray
     }
@@ -61,8 +62,17 @@ export class Summury
     {   
         let array =await this.fillSummury();
         array.forEach(element => {
-            if(element.querySelector('.nameSourah').textContent.includes(searchValue) ||searchValue == '')
-                document.querySelector('.SourahsContainer').appendChild(element)
+            
+            console.log(element)
+            /*if(element.querySelector('.summuryElementBody').querySelector('.nameSourah').textContent.includes(searchValue) || searchValue == '')
+            {
+                
+                element.querySelector('.summuryElementBody').style.display = 'inline-block'
+            }
+            else
+            {
+                element.querySelector('.summuryElementBody').style.display = 'none'
+            }*/
         })
     }
     static async getData(){
