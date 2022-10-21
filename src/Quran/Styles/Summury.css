@@ -1,8 +1,9 @@
 
 @font-face {
     font-family: 'English Arabic Style';
-    src: url(./Fonts/Arabic\ Ramadhan.otf);
+    src: url(../Fonts/Arabic\ Ramadhan.otf);
 }
+
 .bodySummury
 {
  background-color: #76ba65;   
@@ -10,7 +11,7 @@
 .SourahsContainer
 {
     display: grid ;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     
 }
 .summuryElementBody
@@ -37,9 +38,9 @@
     justify-content: center;
 }
 .summuryElementBody .nameSourah{
-    display: inline;
-    font-family: English Arabic Style;
-    font-size: 200%;
+    display: flex;
+    /*font-family: English Arabic Style;*/
+    font-size: 100%;
     margin-left: 10%;
 
 }
@@ -63,15 +64,15 @@
 .summuryElementBody:hover
 {
     cursor: pointer;
-    transform: scale(1.1);
-    box-shadow: 0px 0px 5px 0px white;
+    transform: scale(1.02);
     transition: 0.3s;
 }
 .search
 {
     font-size: 170%;
     border-radius: 40px;
-    margin-left: 10%;
+    margin-left: 2%;
+    width: 4%;
     outline: none;
     border: 2px solid white;
 
@@ -79,9 +80,15 @@
 .search:focus
 {
     transform: scale(1.1);
+    width: 30%;
+    box-shadow: 0px 0px 10px 0px lightgreen;
     outline: none;
     border: 5px solid green;
     margin-left: 10%;
     border-radius: 40px;
-    transition: 0.1s;
+    transition: 0.3s;
+}
+.topBar
+{
+    background-color: darkgreen;
 }

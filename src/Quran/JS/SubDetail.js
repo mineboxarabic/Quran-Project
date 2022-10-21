@@ -1,4 +1,4 @@
-import './subDetail.css';
+import '../Styles/SubDetail.css';
 import { Quran } from './Quran';
 
 export class SubDetails{

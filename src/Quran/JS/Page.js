@@ -1,4 +1,4 @@
-import './Page.css';
+import '../Styles/Page.css';
 import { Summury } from './Summury';
 import { Quran } from './Quran';
 import { SubDetails } from './SubDetail';

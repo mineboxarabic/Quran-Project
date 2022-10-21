@@ -1,10 +1,10 @@
 //import { summuryElement } from "./SummuryElement";
 import { Page } from "./Page";
-import './Summury.css'
+import '../Styles/Summury.css';
 let summuryElement = function (nameSourah, numberSourah, numberAya) 
 {   
   let body = document.querySelector('body');
-  const elementBody = document.querySelector('template').content.cloneNode(true);
+  let elementBody = document.querySelector('template').content.cloneNode(true);
   elementBody.querySelector('.summuryElementBody').setAttribute("data-id",numberSourah);
   elementBody.querySelector('.summuryElementBody').onclick = () => {
   while (body.firstChild) {
@@ -15,7 +15,8 @@ let summuryElement = function (nameSourah, numberSourah, numberAya)
   elementBody.querySelector('.numAya').textContent = numberAya;
   elementBody.querySelector('.numberSourah').textContent = numberSourah;
   elementBody.querySelector('.nameSourah').textContent = nameSourah;
-  return elementBody;
+ // console.log(elementBody.querySelector('.summuryElementBody'))
+  return elementBody.querySelector('a');
 }
 export class Summury
 {
@@ -34,45 +35,49 @@ export class Summury
         </a>
         </template>
         <div class = "bodySummury">
+            <div class = "topBar">
             <input class= "search" placeholder = "Search"></input>
+            </div>
+            <div class = "downBar">
             <div class="SourahsContainer"></div>
+            </div>
         </div>
         `
+        this.search = document.querySelector('.search')
         document.querySelector('.search').onkeyup = () => {
             let searchValue = this.search.value
             this.showData(searchValue,document.querySelector('.bodySummury'))
         }
         this.elementArray = [];
+        this.fillSummury()
         
     }
 
     async fillSummury()
     {
         let data = await Summury.getData();
+        console.log(data)
         let i = 0;
         data.chapters.forEach(Sourah => {
             i++;
-            let s = new summuryElement(Sourah.name_simple,(i),`Ayat ${Sourah.verses_count}`);
+            let s = new summuryElement(`${Sourah.name_simple} | ${Sourah.name_arabic} `,(i),`Ayat ${Sourah.verses_count}`);
             this.elementArray.push(s);
             document.querySelector('.SourahsContainer').appendChild(s);
         })
-        return this.elementArray
     }
     async showData(searchValue)
-    {   
-        let array =await this.fillSummury();
-        array.forEach(element => {
-            
-            console.log(element)
-            /*if(element.querySelector('.summuryElementBody').querySelector('.nameSourah').textContent.includes(searchValue) || searchValue == '')
+    {      
+
+        this.elementArray.forEach(element => {
+            if(element.querySelector('.nameSourah').textContent.toLowerCase().includes(searchValue.toLowerCase()) || searchValue == '')
             {
                 
-                element.querySelector('.summuryElementBody').style.display = 'inline-block'
+                element.style.display = 'inline-block'
             }
             else
             {
-                element.querySelector('.summuryElementBody').style.display = 'none'
-            }*/
+                element.style.display = 'none'
+            }
         })
     }
     static async getData(){

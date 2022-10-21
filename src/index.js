@@ -1,6 +1,4 @@
-import { Summury } from './Quran/Summury.js'
-import { Page } from './Quran/Page.js'
-import './style.css'
+import { Summury } from './Quran/JS/Summury';
 
 let body = document.querySelector('body');
 const summury = new Summury()

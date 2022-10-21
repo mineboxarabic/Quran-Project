@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'Quran Font';
-    src: url(./Fonts/Al\ Qalam\ Quran\ Majeed.ttf);
+    src: url(../Fonts/Al\ Qalam\ Quran\ Majeed.ttf);
 }
 @font-face {
     font-family: 'Quran Font Bismillah';
-    src: url(./Fonts/110_Besmellah_[Takmob.Net].TTF);
+    src: url(../Fonts/110_Besmellah_[Takmob.Net].TTF);
 }
 body 
 {
