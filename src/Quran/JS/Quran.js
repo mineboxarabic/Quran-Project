@@ -48,8 +48,11 @@ export class Quran
             console.log('Sourah not found')
         }
     }
-    getEditions()
+    static async getReaders()
     {
-        return this.quranData;
+        let url = 'https://api.quran.com/api/v4/resources/recitations?language=en'
+        const response = await fetch(url)
+        const data = await response.json()
+        return data
     }
 }

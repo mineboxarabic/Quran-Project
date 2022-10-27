@@ -13,7 +13,9 @@ export class SubDetails{
         p.textContent = ayaTranslation
     }
     constructor (aya) {
-        console.log('testtest')
+        if (document.querySelector('.detailSection') != null) {
+            document.querySelector('.detailSection').remove()
+        }
         let body =  document.querySelector('body');
 
         this.detailSection = document.createElement('div')

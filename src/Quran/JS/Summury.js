@@ -1,6 +1,14 @@
 //import { summuryElement } from "./SummuryElement";
 import { Page } from "./Page";
 import '../Styles/Summury.css';
+
+
+import AyaSepartor from '../Images/AyaSepartor.png' ;
+import CoverImage from '../Images/Quran_Kareem_Cover.jpg' ;
+import BackGroundImage from '../Images/BackGroundImage2.png' ;
+
+
+
 let summuryElement = function (nameSourah, numberSourah, numberAya) 
 {   
   let body = document.querySelector('body');
@@ -10,19 +18,22 @@ let summuryElement = function (nameSourah, numberSourah, numberAya)
   while (body.firstChild) {
           body.removeChild(body.lastChild);  
   }
-      const page = new Page(numberSourah,document.querySelector('body'));
+      const page = new Page(numberSourah);
   };
+
   elementBody.querySelector('.numAya').textContent = numberAya;
   elementBody.querySelector('.numberSourah').textContent = numberSourah;
   elementBody.querySelector('.nameSourah').textContent = nameSourah;
- // console.log(elementBody.querySelector('.summuryElementBody'))
-  return elementBody.querySelector('a');
-}
+  let test = elementBody.querySelector('.backSquare');
+  test.style = `background-image: url(${AyaSepartor});
+    background-repeat: no-repeat;
+  background-size: 100% 100%;`;
+
+  return elementBody.querySelector('a');}
 export class Summury
 {
     constructor()
     {
-
         let body = document.querySelector('body');
         body.innerHTML += `
         <template id="SourahSummuryTemp" >
@@ -35,14 +46,19 @@ export class Summury
         </a>
         </template>
         <div class = "bodySummury">
+            <img class = "Cover">
             <div class = "topBar">
             <input class= "search" placeholder = "Search"></input>
             </div>
-            <div class = "downBar">
+            <div class = "downBars">
             <div class="SourahsContainer"></div>
             </div>
         </div>
         `
+        document.querySelector('.Cover').src = CoverImage;
+        document.querySelector('.SourahsContainer').style = `background-image: url(${BackGroundImage})`;
+
+        
         this.search = document.querySelector('.search')
         document.querySelector('.search').onkeyup = () => {
             let searchValue = this.search.value
@@ -56,7 +72,7 @@ export class Summury
     async fillSummury()
     {
         let data = await Summury.getData();
-        console.log(data)
+        //console.log(data)
         let i = 0;
         data.chapters.forEach(Sourah => {
             i++;
@@ -98,6 +114,5 @@ export class Summury
     }
 
     //fetch data from api https://api.quran.com/api/v4/chapters?language=en
-
 
 }

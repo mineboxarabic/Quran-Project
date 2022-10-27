@@ -3,7 +3,17 @@
     font-family: 'English Arabic Style';
     src: url(../Fonts/Arabic\ Ramadhan.otf);
 }
-
+.summuryElementBody .backSquare
+{
+    
+    display: inline-block;
+    padding: 10%;
+}
+.summuryElementBody:hover .backSquare
+{
+    transform: rotateZ(20deg);
+    transition: 0.3s;
+}
 .bodySummury
 {
  background-color: #76ba65;   
@@ -11,6 +21,8 @@
 .SourahsContainer
 {
     display: grid ;
+   background-color: #1c280b;
+    background-position: 0%;
     grid-template-columns: repeat(4, 1fr);
     
 }
@@ -20,8 +32,17 @@
     background-color: #C7F2A4;
     margin: 10px;
     width: 80%;
-    border-radius: 20px;
-    box-shadow: 4px 5px 0px 5px #2d5931;
+    padding: 1rem;
+    border-width: 4px;
+    
+    border-style: solid;
+    box-shadow: 0px 0px 30px -10px white;
+    background-color: #76ba65;
+    background: linear-gradient(rgba(251,253,242,1),rgba(152,167,82,1)) 50% 50%/calc(100% - 16px) calc(100% - 16px) no-repeat,
+    linear-gradient(0deg, rgba(152,167,82,1) 0%, rgba(171,193,92,1) 52%, rgba(251,253,242,1) 100%);
+    border-radius: 7px;
+    padding: 18px;
+    box-sizing: border-box;
     
 }
 .summuryElementBody .numAya{
@@ -34,7 +55,7 @@
     display: inline;
     font-size: 300%;
     text-align: center;
-    color: aliceblue;
+    color: rgb(83, 83, 83);
     justify-content: center;
 }
 .summuryElementBody .nameSourah{
@@ -44,27 +65,12 @@
     margin-left: 10%;
 
 }
-.summuryElementBody .backSquare
-{
-    display: inline-block;
-    background-color: #2d5931;
-    padding: 2.5% 5%;
-    transform: rotateZ(0deg);
-    border-radius: 10%;
-    clip-path: polygon( 50% 0%, 100% 50%, 50% 100%,  0% 50%);
-    /*clip-path: circle(45% at 50% 50%);*/
-    margin: 10px;
-}
 
-.summuryElementBody:hover .backSquare
-{
-    transform: rotateZ(20deg);
-    transition: 0.3s;
-}
 .summuryElementBody:hover
 {
     cursor: pointer;
     transform: scale(1.02);
+    box-shadow: 0px 0px 7px 0px white;
     transition: 0.3s;
 }
 .search
@@ -90,5 +96,11 @@
 }
 .topBar
 {
-    background-color: darkgreen;
+    background-color: #283612;
+}
+.Cover
+{
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
 }
