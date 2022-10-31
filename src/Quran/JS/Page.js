@@ -3,42 +3,50 @@ import { Summury } from './Summury';
 import { Quran } from './Quran';
 import { Ayah } from './Ayah';
 import interact from 'interactjs'
-import pageBackground from '../Images/pageBackground.jpg'
+import pageBackground from '../Images/pageBackground.png'
 import Background from '../Images/BackGroundImage2.png'
+import smallAyaBackground from '../Images/smallAyaBackground.png'
 let Ayahs = [];
 let pages = [];
+let quranPages = [];
 function sideBar () {
     let ayahsSideBar = [];
     function fillSideSectionAya () 
     {
-        let goto = document.querySelector('.goToAya')
-
-        ayahsSideBar.forEach(ayah => {
+        let sideSection = document.querySelector('.sideBar')
+        var goto = sideSection.querySelector('.goToAya')
+        ayahsSideBar.forEach(ayah => 
+        {
             ayah.remove();
-        })
-
+        });
         for(let i = 0; i < Ayahs.length; i++){
-            
-            let ayanum = document.createElement('p');
+            let ayanum = document.createElement('option');
+            ayanum.setAttribute('value', (i + 1));
+            goto.appendChild(ayanum);
             ayanum.setAttribute('class', 'ayaNum')
             ayanum.textContent ='Aya ' + (i + 1);
-            ayanum.onclick = () => {
-                let aya = document.getElementById(i + 1)
-                aya.scrollIntoView()
+            ayanum.onclick = () => 
+            {
+                let aya = document.getElementById(i)
+                console.log(aya)
+                aya.scrollIntoView();
+                
             }
-            goto.appendChild(ayanum)
+            
         }
     }
     async function fillSideSection() {
         let sideBar = document.querySelector(".sideSection");
-        sideBar.style = `background-image: url(${Background})`;
-    let sourahs = await Summury.getSummury()
-    let i = 0;
-    sourahs.forEach(sourah => {
+        //sideBar.style = `background-image: url(${Background})`;
+        let sourahs = await Summury.getSummury()
+        let i = 0;
+        sourahs.forEach(sourah => 
+        {
         i++;
-        let sourahElement = (n) => {
+        let sourahElement = (n) => 
+        {
             let a = document.createElement('a');
-            let element = document.createElement('p');
+            let element = document.createElement('option');
             element.setAttribute('class', 'sourahElement')
             element.textContent = sourah;
             let quranSection = document.querySelector('.quranSection')
@@ -56,10 +64,46 @@ function sideBar () {
     }
     fillSideSection();
     fillSideSectionAya();
+    let sideBar = document.querySelector(".sideBar");
+    let sideSection = sideBar.querySelector(".sideSection");
+    
+    let goto = sideBar.querySelector('.goToAya')
+    let searchBar = sideSection.querySelector('.searchSourah')
+    let searchAya = goto.querySelector('.searchAya')
+
+    searchAya.onkeyup = () => {
+        let sourahs = document.querySelectorAll('.ayaNum')
+        sourahs.forEach(sourah => 
+            {
+        if(sourah.value == parseInt(searchAya.value) || searchAya.value == '')
+            {
+                sourah.style.display = 'block'
+            }
+            else
+            {
+                sourah.style.display = 'none'
+            }
+        })
+    }
+
+    searchBar.onkeyup = () => {
+        let sourahs = document.querySelectorAll('.sourahElement')
+        sourahs.forEach(sourah => {
+            if(sourah.textContent.toLowerCase().includes(searchBar.value.toLowerCase()) == false)
+            {
+                sourah.style.display = 'none'
+            }
+            else
+            {
+                sourah.style.display = 'block'
+            }
+        })
+    }
     //this.fillSideSectionAya();
     
 }
-export class Page {
+export class Page
+{
     static async fillSourah(Sourah) {
         let quran = new Quran();
         if (quran.isSourah(Sourah)) {
@@ -67,53 +111,76 @@ export class Page {
             this.quranSection = document.querySelector('.quranSection')
             this.quranSection.innerHTML += '<h1 class = headerBSM>g</h1>'
             sourahArray.data.ayahs[0].text = sourahArray.data.ayahs[0].text.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", " ")
-            let Ayahs = [];
-            let pages = [];
+            Ayahs = [];
+            pages = [];
             sourahArray.data.ayahs.forEach
             (ayah =>
             {
                 Ayahs.push(new Ayah(ayah.number,ayah.numberInSurah, ayah.text, ayah.page));
             })
-
+            sideBar();
 
             let tempAyahs = [];
-            for(let i = 0; i < Ayahs.length -1; i++)
-            {
-                let previusePage = parseInt(Ayahs[i + 1].pageNum.textContent);
-                let currentPage = parseInt(Ayahs[i].pageNum.textContent);
-
-                tempAyahs.push(Ayahs[i]);
-                if (previusePage != currentPage)
+            let lastPage = parseInt(Ayahs[0].pageNum.textContent);
+            Ayahs.forEach(ayah => 
+                {
+                let currentPage = parseInt(ayah.pageNum.textContent);
+                tempAyahs.push(ayah);
+                if(currentPage != lastPage || ayah.ayaSep.textContent == `{${Ayahs.length}}`)
                 {
                     pages.push(tempAyahs);
                     tempAyahs = [];
                 }
-                
-            }
+                lastPage = currentPage;
+            })
 
 
             for(let i = 0; i < pages.length; i++)
             {
+                let doesPageChange = () =>{
+                    let pageNum = parseInt(Ayahs[0].pageNum.textContent)
+                    for(let j = 0 ; j < Ayahs.length; j++)
+                    {
+                        if(parseInt(Ayahs[j].pageNum.textContent) != pageNum)
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
                 let page = document.createElement('div');
-                
-
                 page.setAttribute('class', 'pageQ')
                 page.setAttribute('id', 'page' + (i + 1))
                 this.quranSection.appendChild(page)
+
                 let pageNumber = document.createElement('p');
                 pageNumber.setAttribute('class', 'pageNumber')
                 pages[i].forEach(ayah => {
-                    
                     pageNumber.textContent = ayah.pageNum.textContent;
-
                     page.appendChild(ayah.aya)
                     page.appendChild(ayah.ayaSep)
-                    page.style = `
-                    background-image: url(${pageBackground});
-                    background-size: 100% 100%;
-                    background-repeat: no-repeat;
-                    background-position: center;
+                    if(doesPageChange() || page.id == 'page'+1 && Sourah == 2)
+                    {
+                        page.style = `
+                        font-size: 14px;
+                        width: 33%;
+                        padding: 35% 20%;   
+                        background-image: url(${smallAyaBackground});
+                        background-size: 800px 1050px;
+                        background-repeat: no-repeat;
+                        background-position: center;
                     `
+                    }
+                    else
+                    {
+                        page.style = `
+                        background-image: url(${pageBackground});
+                        background-size: 100% 100%;
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        `
+                    }
+
                 })
                 page.appendChild(pageNumber)
             }
@@ -123,7 +190,8 @@ export class Page {
         let ComboBox = document.querySelector(".ComboBoxSourahs");
         let sourahs = await Summury.getSummury()
         let i = 0;
-        sourahs.forEach(sourah => {
+        sourahs.forEach(sourah => 
+            {
             i++;
             let option = document.createElement('option');
             option.setAttribute('class', 'optionComboBox')
@@ -183,8 +251,27 @@ export class Page {
         </div>
         
         `
-
+        document.querySelector('.quranSection').style = `background-image: url(${Background});`;
+        document.querySelector('.downBar').style = `background-image: url(${Background});`;
         //================================================================================================
+        let visibleSideBar = () => 
+        {
+            let sideSection = document.querySelector(".sideSection");
+            if(sideSection.style.display == "none" && document.querySelector(".goToAya").style.display == "none")
+            {
+                document.querySelector('.sideBar').style.display = 'none';
+            }
+            else
+            {
+                document.querySelector('.sideBar').style.display = 'block';
+                document.querySelector('.sideBar').style = 
+                `
+                display:flex;
+                flex-direction: row;
+                width: 20%;
+                `
+            }
+        };
         document.querySelector(".backButton").onclick = () => {
             while (body.firstChild) {
                 body.removeChild(body.lastChild);
@@ -193,20 +280,25 @@ export class Page {
             summury.showData('')
         }
         document.querySelector(".ShowSourahsMenu").onclick = () => {
-            let sideBar = document.querySelector(".sideSection");
-            if (sideBar.style.display == 'none') {
-                sideBar.style.display = 'flex'
+            let sideSection = document.querySelector(".sideSection");
+            
+            if (sideSection.style.display == 'none' )
+            {
+                sideSection.style.display = 'flex'
             } else {
-                sideBar.style.display = 'none'
+                sideSection.style.display = 'none'
             }
+            visibleSideBar();
         }
         document.querySelector(".ShowAyaMenu").onclick = () => {
-            let sideBar = document.querySelector(".goToAya");
-            if (sideBar.style.display == 'none') {
-                sideBar.style.display = 'flex'
+            let sideSection = document.querySelector(".goToAya");
+
+            if (sideSection.style.display == 'none') {
+                sideSection.style.display = 'flex'
             } else {
-                sideBar.style.display = 'none'
+                sideSection.style.display = 'none'
             }
+            visibleSideBar();
         }
         document.querySelector(".ComboBoxReader").onchange = () => {
             this.reciterName = document.querySelector(".ComboBoxReader").value;
@@ -215,9 +307,7 @@ export class Page {
         //================================================================================================
         Page.fillSourah(Sourah);
         this.createComboBox();
-        //this.fillSideBar();
         this.fillReaders();
-        sideBar();
 
         this.quran = new Quran();
         //================================================================================================

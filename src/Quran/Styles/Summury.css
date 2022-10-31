@@ -78,20 +78,15 @@
     font-size: 170%;
     border-radius: 40px;
     margin-left: 2%;
-    width: 4%;
     outline: none;
     border: 2px solid white;
 
 }
 .search:focus
 {
-    transform: scale(1.1);
-    width: 30%;
+    transform: scale(1.02);
     box-shadow: 0px 0px 10px 0px lightgreen;
     outline: none;
-    border: 5px solid green;
-    margin-left: 10%;
-    border-radius: 40px;
     transition: 0.3s;
 }
 .topBar
