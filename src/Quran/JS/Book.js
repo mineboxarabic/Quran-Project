@@ -2,6 +2,7 @@ import '../Styles/Page.css';
 import { Summury } from './Summury';
 import { Quran } from './Quran';
 import { Ayah } from './Ayah';
+import {Page} from './Page'
 import interact from 'interactjs'
 import pageBackground from '../Images/pageBackground.png'
 import Background from '../Images/BackGroundImage2.png'
@@ -136,9 +137,9 @@ export class Book
                             </aside>
                     </div>
                     <div class = "downBar">
-                        <button class= "prev">Prev</button>
+                        <button class= "prev" type=button>Prev</button>
                         <div class="quranSection"></div>
-                        <button class= "next">Next</button>
+                        <button class= "next" type=button>Next</button>
                     </div>
                 </div>
         </div>
@@ -200,7 +201,6 @@ export class Book
         Book.fillSourah(Sourah);
         this.createComboBox();
         this.fillReaders();
-
         this.quran = new Quran();
         //================================================================================================
         interact('.sideSection').resizable({
@@ -281,7 +281,6 @@ export class Book
                 Ayahs.push(new Ayah(ayah.number,ayah.numberInSurah, ayah.text, ayah.page));
             })
             sideBar();
-
             let tempAyahs = [];
             let lastPage = parseInt(Ayahs[0].pageNum.textContent);
             Ayahs.forEach(ayah => 
@@ -298,10 +297,10 @@ export class Book
                 lastPage = currentPage;
             })
 
-            let tempPages = [];
             for(let i = 0; i < pages.length; i++)
             {
-                let doesPageChange = () =>{
+                let doesPageChange = () =>
+                {
                     let pageNum = parseInt(Ayahs[0].pageNum.textContent)
                     for(let j = 0 ; j < Ayahs.length; j++)
                     {
@@ -310,67 +309,14 @@ export class Book
                             return false;
                         }
                     }
-                    return true;}
-                let page = document.createElement('div');
-                page.setAttribute('class', 'pageQ')
-                page.setAttribute('id', 'page' + (i + 1))
-                this.quranSection.appendChild(page);
-                let pageNumber = document.createElement('p');
-                pageNumber.setAttribute('class', 'pageNumber')
-                pages[i].forEach(ayah => {
-                    pageNumber.textContent = ayah.pageNum.textContent;
-                    page.appendChild(ayah.aya)
-                    page.appendChild(ayah.ayaSep)
-                    if(doesPageChange() || page.id == 'page'+1 && Sourah == 2)
-                    {
-                        page.style = `
-                        display: none;
-                        font-size: 14px;
-                        width: 33%;
-                        padding: 35% 20%;   
-                        background-image: url(${smallAyaBackground});
-                        background-size: 800px 1050px;
-                        background-repeat: no-repeat;
-                        background-position: center;
-                    `
-                    }
-                    else
-                    {
-                        page.style = `
-                        display: none;
-                        background-image: url(${pageBackground});
-                        background-size: 100% 100%;
-                        background-repeat: no-repeat;
-                        background-position: center;
-                        `
-                    }
-                    
-                    
-                })
-                
-                page.appendChild(pageNumber)
-                this.quranSection.querySelector('#page' + 1).style.display = 'block';
-                
+                    return true;
+                }
+
+                let page = new Page(this.quranSection,pages[i],1,i,doesPageChange(),(Sourah == 2),pages.length);
             }
-            this.current_Page = 1;
-            document.querySelector('.next').onclick = () => {
-                let nextPage = this.quranSection.querySelector('#page' + (this.current_Page + 1));
-                let lastPage = this.quranSection.querySelector('#page' + (this.current_Page));
-                if(lastPage)
-                    lastPage.style.display = 'none';
-                nextPage.style.display = 'block';
-                this.current_Page += 1;
-            }
-            document.querySelector('.prev').onclick = () => {
-                let nextPage = this.quranSection.querySelector('#page' + (this.current_Page - 1));
-                let lastPage = this.quranSection.querySelector('#page' + (this.current_Page));
-                if(lastPage)
-                    lastPage.style.display = 'none';
-                nextPage.style.display = 'block';
-                this.current_Page -= 1;
-            }
-        }
+            
     }
+}
     async createComboBox() {
         let ComboBox = document.querySelector(".ComboBoxSourahs");
         let sourahs = await Summury.getSummury()
