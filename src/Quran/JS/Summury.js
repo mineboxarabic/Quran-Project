@@ -1,5 +1,5 @@
 //import { summuryElement } from "./SummuryElement";
-import { Page } from "./Page";
+import { Book } from "./Book";
 import '../Styles/Summury.css';
 
 
@@ -18,7 +18,7 @@ let summuryElement = function (nameSourah, numberSourah, numberAya)
   while (body.firstChild) {
           body.removeChild(body.lastChild);  
   }
-      const page = new Page(numberSourah);
+      const book = new Book(numberSourah);
   };
 
   elementBody.querySelector('.numAya').textContent = numberAya;
