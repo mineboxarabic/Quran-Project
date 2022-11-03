@@ -106,6 +106,7 @@ body
 
     background-color: #76ba65;
     padding: 20px;
+    width: 100%;
     direction: rtl;
     text-align: center;
     align-items: center;
@@ -116,7 +117,8 @@ body
 }
 .pageQ
 {
-    padding: 11%;
+    padding: 13%;
+    height: 700px;
     font-size: 15px;
     display: inline-block;
     width: 600px;
@@ -203,4 +205,18 @@ body
 .pageNumber
 {
     font-size: 150%;
+}
+
+.next
+{
+    transform: translate(-70px,600px)
+}
+.prev
+{
+    transform: translate(70px,600px)
+}
+.next,.prev
+{
+    height: 200px;
+    width: 100px;
 }
