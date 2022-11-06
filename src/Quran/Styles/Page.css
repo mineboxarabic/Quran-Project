@@ -69,7 +69,8 @@ button:hover
 {
     cursor: pointer;
     color: white;
-    text-shadow: 1px 1px 5px white;
+    background-color: lightgreen;
+
     transition: 0.3s;
 }
 select
@@ -146,6 +147,7 @@ body
     display:flex;
     flex-direction: row;
     width: 20%;
+    z-index:1
 }
 .downBar
 {
@@ -219,4 +221,10 @@ body
 {
     height: 200px;
     width: 100px;
+}
+.searchSourah, .searchAya
+{
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
 }

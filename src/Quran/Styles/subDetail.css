@@ -14,10 +14,11 @@
 .detailSection
 {
     display: grid;
+    z-index: 2;
     position: fixed;
     background-color: green;
     padding: 1% 43%;
-    margin-top: 39%;
+    margin-top: 36%;
     width: 54%;
     border-radius: 20px;
     animation: append-animated .3s linear;

@@ -4,6 +4,19 @@ import smallAyaBackground from '../Images/smallAyaBackground.png'
 import BSMBackGround from '../Images/BSMBackGround.png'
 export class Page
 {
+    static showPage(num)
+    {
+        let number = num;
+        let pages = document.querySelectorAll('.pageQ');
+        pages.forEach(page => 
+            {
+            if(page.classList[1] == 'pageInQuran' + number)
+                page.style.display = 'block';
+            else
+                page.style.display = 'none';
+        })
+        //this.current_Page = number;
+    }
     turnPageRight()
     {
         if((this.current_Page + 1) > 0 && (this.current_Page + 1) <= this.lastPageNum)
@@ -14,6 +27,7 @@ export class Page
             nextPage.style.display = 'block';
             this.current_Page += 1;
         }
+        return this.current_Page;
     }
     turnPageLeft()
     {
@@ -26,6 +40,8 @@ export class Page
             lastPage.style.display = 'block';
             this.current_Page -= 1;
         }
+
+        return this.current_Page;
     }
     constructor(quranSection,pageAyahs,curentPage,id,doesPageChange,isBaqara,lastPageNum)
     {
@@ -38,13 +54,15 @@ export class Page
         page.setAttribute('class', 'pageQ')
         page.setAttribute('id', 'page' + (this.id + 1))
         quranSection.appendChild(page);
-
         let pageNumber = document.createElement('p');
         pageNumber.setAttribute('class', 'pageNumber')
+
         pageAyahs.forEach(ayah => {
             pageNumber.textContent = ayah.pageNum.textContent;
+            
             page.appendChild(ayah.aya)
             page.appendChild(ayah.ayaSep)
+            page.classList.add('pageInQuran' + ayah.pageNum.textContent);
             if(doesPageChange || page.id == 'page'+1 && isBaqara)
             {
                 page.style = `
@@ -52,9 +70,9 @@ export class Page
                 font-size: 14px;
                 width: 33%;
                 height: 100%;
-                padding: 35% 20%;   
+                padding: 30% 20%;   
                 background-image: url(${smallAyaBackground});
-                background-size: 800px 1050px;
+                background-size: 990px 1150px;
                 background-repeat: no-repeat;
                 background-position: center;
             `
@@ -73,6 +91,7 @@ export class Page
         page.appendChild(pageNumber);
         quranSection.querySelector('#page' + 1).style.display = 'block';
         
+
     document.addEventListener('keydown', (e) => {
         if (e.key == 'ArrowRight') {
             this.turnPageRight();

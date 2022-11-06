@@ -11,7 +11,9 @@ let Audio = async (numberOfAyah) =>
     }
     async function getAudioData()
     {
-        let audioAyahUrl = await fetch(`https://api.quran.com/api/v4/recitations/${Reader}/by_ayah/${numberOfAyah}`)
+        let audioAyahUrl = await fetch(`https://api.quran.com/api/v4/recitations/${Reader}/by_ayah/${numberOfAyah}`).catch((error) => {
+            throw new Error('Audio not Found ' + error);
+        })
         let audioAyahData = await audioAyahUrl.json()
         return audioAyahData;
 
@@ -51,7 +53,9 @@ export class Ayah
     }
     static async getPageNum()
     {
-
+        let pageNum = document.createElement('div');
+        pageNum.textContent = page;
+        return pageNum;
     }
     constructor(numInQuran, ayaNumberInSourah , text, page)
     {
@@ -64,7 +68,7 @@ export class Ayah
         
 
         aya.setAttribute('class', 'ayah');
-        aya.setAttribute('id', Ayah.idCounter++);
+        aya.setAttribute('id', ayaNumberInSourah);
         aya.textContent = text;
         aya.onclick = () => {
             this.playAyah(this.numInQuran);

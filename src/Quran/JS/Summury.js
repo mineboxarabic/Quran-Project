@@ -72,7 +72,6 @@ export class Summury
     async fillSummury()
     {
         let data = await Summury.getData();
-        //console.log(data)
         let i = 0;
         data.chapters.forEach(Sourah => {
             i++;
@@ -96,9 +95,13 @@ export class Summury
             }
         })
     }
-    static async getData(){
+    static async getData()
+    {
         let url = 'https://api.quran.com/api/v4/chapters?language=en'
-        const response = await fetch(url)
+        const response = await fetch(url).catch((error) => 
+        {
+            throw new Error('Could not Fetch chapters Data'+ error);
+        })
         const data = await response.json()
         return data;
     }

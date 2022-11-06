@@ -11,11 +11,15 @@ import BSMBackGround from '../Images/BSMBackGround.png'
 let Ayahs = [];
 let pages = [];
 let quranPages = [];
+function clearBody(){
+    let body = document.querySelector('body');
+    body.innerHTML = '';
+}
 function clear(element)
 {
-    while (element.firstChild) {
-        element.removeChild(element.lastChild);
-    }
+    element.forEach(element => {
+        element.remove();
+    })
 }
 function sideBar () {
     let ayahsSideBar = [];
@@ -35,8 +39,10 @@ function sideBar () {
             ayanum.textContent ='Aya ' + (i + 1);
             ayanum.onclick = () => 
             {
-                let aya = document.getElementById(i)
+                let aya = document.getElementById(i + 1)
+                console.log('page Sent '+ parseInt(Ayahs[i].pageNum.textContent))
                 console.log(aya)
+                Page.showPage(parseInt(Ayahs[i].pageNum.textContent),'right');
                 aya.scrollIntoView();
                 
             }
@@ -62,7 +68,7 @@ function sideBar () {
                 while (document.querySelector('.quranSection').firstChild) {
                     document.querySelector('.quranSection').removeChild(document.querySelector('.quranSection').lastChild);
                 }
-                Page.fillSourah(n)
+                Book.fillSourah(n)
             }
             ayahsSideBar.push(element);
             return element;
@@ -70,6 +76,8 @@ function sideBar () {
         sideBar.appendChild(sourahElement(i))
     })
     }
+    clear(document.querySelectorAll('.sourahElement'))
+    clear(document.querySelectorAll('.ayaNum'))
     fillSideSection();
     fillSideSectionAya();
     let sideBar = document.querySelector(".sideBar");
@@ -109,7 +117,114 @@ function sideBar () {
     //this.fillSideSectionAya();
     
 }
+function createEvents()
+{        let visibleSideBar = () => 
+    {
+        let sideSection = document.querySelector(".sideSection");
+        if(sideSection.style.display == "none" && document.querySelector(".goToAya").style.display == "none")
+        {
+            document.querySelector('.sideBar').style.display = 'none';
+        }
+        else
+        {
+            document.querySelector('.sideBar').style.display = 'block';
+            document.querySelector('.sideBar').style = 
+            `
+            display:flex;
+            flex-direction: row;
+            width: 20%;
+            `
+        }
+    };
+    
+    document.querySelector(".ShowSourahsMenu").onclick = () => {
+        let sideSection = document.querySelector(".sideSection");
+        
+        if (sideSection.style.display == 'none' )
+        {
+            sideSection.style.display = 'flex'
+        } else {
+            sideSection.style.display = 'none'
+        }
+        visibleSideBar();
+    }
 
+    document.querySelector(".ShowAyaMenu").onclick = () => 
+    {
+        let sideSection = document.querySelector(".goToAya");
+
+        if (sideSection.style.display == 'none') {
+            sideSection.style.display = 'flex'
+        } else {
+            sideSection.style.display = 'none'
+        }
+        visibleSideBar();
+    }
+
+    document.querySelector(".backButton").onclick = () => {
+        clearBody();
+        const summury = new Summury()
+        summury.showData('')
+    }
+}
+function addInteractions()
+{
+    interact('.sideSection').resizable({
+        edges: { left: false, right: false, bottom: true, top: false },
+        listeners: 
+        {
+            move(event) {
+                let {x , y} = event.target.dataset
+                x = (parseInt(x) || 0) + event.deltaRect.left
+                y = (parseInt(y) || 0) + event.deltaRect.top
+                Object.assign(event.target.style, {
+                    width: `${event.rect.width}px`,
+                    height: `${event.rect.height}px`,
+                    transform: `translate(${x}px, ${y}px)`
+                })
+                Object.assign(event.target.dataset, {x, y})
+            }
+        }
+    })
+
+    interact('.goToAya').resizable({
+        edges: { left: false, right: true, bottom: true, top: false },
+        listeners: 
+        {
+            move(event) {
+                let {x , y} = event.target.dataset
+                x = (parseInt(x) || 0) + event.deltaRect.left
+                y = (parseInt(y) || 0) + event.deltaRect.top
+                Object.assign(event.target.style, {
+                    width: `${event.rect.width}px`,
+                    height: `${event.rect.height}px`,
+                    transform: `translate(${x}px, ${y}px)`
+                })
+                Object.assign(event.target.dataset, {x, y})
+            }
+        }
+    })
+    interact('.sideBar')
+    .resizable({
+        edges: { left: false, right: true, bottom: true, top: false },
+        listeners: {
+        move: function (event) {
+            let { x, y } = event.target.dataset
+
+            x = (parseFloat(x) || 0) + event.deltaRect.left
+            y = (parseFloat(y) || 0) + event.deltaRect.top
+
+            Object.assign(event.target.style, {
+            width: `${event.rect.width}px`,
+            height: `${event.rect.height}px`,
+            transform: `translate(${x}px, ${y}px)`
+            })
+
+    Object.assign(event.target.dataset, { x, y })
+  }
+}
+})
+}
 export class Book
 {
     constructor(Sourah) {
@@ -129,11 +244,11 @@ export class Book
             <div class="downSection">
                     <div class = "sideBar">
                             <aside class="goToAya">
-                                <input class = "searchAya"> </input>
+                                <input class = "searchAya" placeholder="Search Aya"> </input>
                             </aside>
                             <aside class = "sideSection">
                                 <h4> Select Sourah </h4>
-                                <input class = "searchSourah"> </input>
+                                <input class = "searchSourah" placeholder="Search Sourah"> </input>
                             </aside>
                     </div>
                     <div class = "downBar">
@@ -144,128 +259,34 @@ export class Book
                 </div>
         </div>
         `
+        this.quranSection = document.querySelector('.quranSection');
         document.querySelector('.quranSection').style = `background-image: url(${Background});`;
         document.querySelector('.downBar').style = `background-image: url(${Background});`;
-        //================================================================================================
-        let visibleSideBar = () => 
-        {
-            let sideSection = document.querySelector(".sideSection");
-            if(sideSection.style.display == "none" && document.querySelector(".goToAya").style.display == "none")
-            {
-                document.querySelector('.sideBar').style.display = 'none';
-            }
-            else
-            {
-                document.querySelector('.sideBar').style.display = 'block';
-                document.querySelector('.sideBar').style = 
-                `
-                display:flex;
-                flex-direction: row;
-                width: 20%;
-                `
-            }
-        };
-        document.querySelector(".backButton").onclick = () => {
-            while (body.firstChild) {
-                body.removeChild(body.lastChild);
-            }
-            const summury = new Summury()
-            summury.showData('')
-        }
-        document.querySelector(".ShowSourahsMenu").onclick = () => {
-            let sideSection = document.querySelector(".sideSection");
-            
-            if (sideSection.style.display == 'none' )
-            {
-                sideSection.style.display = 'flex'
-            } else {
-                sideSection.style.display = 'none'
-            }
-            visibleSideBar();
-        }
-        document.querySelector(".ShowAyaMenu").onclick = () => {
-            let sideSection = document.querySelector(".goToAya");
 
-            if (sideSection.style.display == 'none') {
-                sideSection.style.display = 'flex'
-            } else {
-                sideSection.style.display = 'none'
-            }
-            visibleSideBar();
-        }
-        document.querySelector(".ComboBoxReader").onchange = () => {
+
+        document.querySelector(".ComboBoxReader").onchange = () => 
+        {
             this.reciterName = document.querySelector(".ComboBoxReader").value;
         }
 
-        //================================================================================================
+        createEvents();
         Book.fillSourah(Sourah);
         this.createComboBox();
         this.fillReaders();
         this.quran = new Quran();
-        //================================================================================================
-        interact('.sideSection').resizable({
-            edges: { left: false, right: true, bottom: true, top: false },
-            listeners: 
-            {
-                move(event) {
-                    let {x , y} = event.target.dataset
-                    x = (parseInt(x) || 0) + event.deltaRect.left
-                    y = (parseInt(y) || 0) + event.deltaRect.top
-                    Object.assign(event.target.style, {
-                        width: `${event.rect.width}px`,
-                        height: `${event.rect.height}px`,
-                        transform: `translate(${x}px, ${y}px)`
-                    })
-                    Object.assign(event.target.dataset, {x, y})
-                }
-            }
-        })
-
-        interact('.goToAya').resizable({
-            edges: { left: false, right: true, bottom: true, top: false },
-            listeners: 
-            {
-                move(event) {
-                    let {x , y} = event.target.dataset
-                    x = (parseInt(x) || 0) + event.deltaRect.left
-                    y = (parseInt(y) || 0) + event.deltaRect.top
-                    Object.assign(event.target.style, {
-                        width: `${event.rect.width}px`,
-                        height: `${event.rect.height}px`,
-                        transform: `translate(${x}px, ${y}px)`
-                    })
-                    Object.assign(event.target.dataset, {x, y})
-                }
-            }
-        })
-        interact('.sideBar')
-        .resizable({
-            edges: { left: false, right: true, bottom: true, top: false },
-            listeners: {
-            move: function (event) {
-                let { x, y } = event.target.dataset
-
-                x = (parseFloat(x) || 0) + event.deltaRect.left
-                y = (parseFloat(y) || 0) + event.deltaRect.top
-
-                Object.assign(event.target.style, {
-                width: `${event.rect.width}px`,
-                height: `${event.rect.height}px`,
-                transform: `translate(${x}px, ${y}px)`
-                })
-
-        Object.assign(event.target.dataset, { x, y })
-      }
-    }
-  })
+        addInteractions();
     }
     static async fillSourah(Sourah) {
         let quran = new Quran();
         if (quran.isSourah(Sourah)) {
+
             let sourahArray = await quran.getSourah(Sourah);
+            console.log(sourahArray);
             this.quranSection = document.querySelector('.quranSection')
             this.quranSection.innerHTML += '<strong class = headerBSM>f</strong>'
             sourahArray.data.ayahs[0].text = sourahArray.data.ayahs[0].text.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", " ")
+
+
             document.querySelector('.headerBSM').style = `
             background-image: url(${BSMBackGround});
             background-size: 100% 100%;
@@ -273,6 +294,8 @@ export class Book
             margin-top: 20px;
             margin-bottom: 20px;
             `
+
+
             Ayahs = [];
             pages = [];
             sourahArray.data.ayahs.forEach
@@ -283,19 +306,18 @@ export class Book
             sideBar();
             let tempAyahs = [];
             let lastPage = parseInt(Ayahs[0].pageNum.textContent);
-            Ayahs.forEach(ayah => 
+            for(let i = 0 ; i < Ayahs.length ; i++)
+            {
+                let currentPage = parseInt(Ayahs[i].pageNum.textContent);
+                if(i < Ayahs.length - 1)
+                    lastPage = parseInt(Ayahs[i + 1].pageNum.textContent);
+                tempAyahs.push(Ayahs[i]);
+                if(currentPage != lastPage || Ayahs[i].ayaSep.textContent == `{${Ayahs.length}}`)
                 {
-                let currentPage = parseInt(ayah.pageNum.textContent);
-                tempAyahs.push(ayah);
-                if(currentPage != lastPage || ayah.ayaSep.textContent == `{${Ayahs.length}}`)
-                {
-                    let map = new Map();
-                    map.set(currentPage, tempAyahs);
                     pages.push(tempAyahs);
                     tempAyahs = [];
                 }
-                lastPage = currentPage;
-            })
+            }
 
             for(let i = 0; i < pages.length; i++)
             {
@@ -311,33 +333,31 @@ export class Book
                     }
                     return true;
                 }
-
                 let page = new Page(this.quranSection,pages[i],1,i,doesPageChange(),(Sourah == 2),pages.length);
             }
             
     }
 }
-    async createComboBox() {
-        let ComboBox = document.querySelector(".ComboBoxSourahs");
-        let sourahs = await Summury.getSummury()
-        let i = 0;
-        sourahs.forEach(sourah => 
-            {
-            i++;
-            let option = document.createElement('option');
-            option.setAttribute('class', 'optionComboBox')
-            option.setAttribute('value', i);
-            option.textContent = sourah;
-            ComboBox.onchange = () => {
-                while (this.quranSection.firstChild) {
-                    this.quranSection.removeChild(this.quranSection.lastChild);
-                }
-                this.fillSourah(parseInt(ComboBox.value))
-            }
-            ComboBox.innerHTML += option.outerHTML;
-        })
+async createComboBox() {
+    let ComboBox = document.querySelector(".ComboBoxSourahs");
+    let sourahs = await Summury.getSummury()
+    let i = 0;
+    sourahs.forEach(sourah => 
+        {
+        i++;
+        let option = document.createElement('option');
+        option.setAttribute('class', 'optionComboBox')
+        option.setAttribute('value', i);
+        
+        option.textContent = sourah;
+        ComboBox.onchange = () => {
+            this.quranSection.innerHTML = '';
+            Book.fillSourah(parseInt(ComboBox.value))
+        }
+        ComboBox.innerHTML += option.outerHTML;
+    })
 
-    }
+}
     async fillReaders()
     {
 
