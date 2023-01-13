@@ -7,6 +7,16 @@ A program to read, listen to, and translate the Quran.
 - Listen to audio recordings of the Quran
 - View translations of the Quran in various languages
 
+## Screenshots
+### The main page:
+<img src="../master/screenshots/1.PNG" alt="The main page" height="300" width="450">
+### The sourah from inside:
+<img src="../master/screenshots/chrome-capture-2023-0-13.gif" alt="The sourah from inside" height="300" width="450">
+### The different pages:
+<img src="../master/screenshots/chrome-capture-2023-0-1322.gif" alt="The sourah from inside" height="300" width="450">
+
+
+
 ## Requirements
 - [Node.js](https://nodejs.org/)
 - npm (comes with Node.js)
