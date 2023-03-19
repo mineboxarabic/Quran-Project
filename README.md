@@ -8,7 +8,7 @@ A program to read, listen to, and translate the Quran.
 - View translations of the Quran in various languages
 
 ## Screenshots
-### The main page:
+<h3> The main page </h3>
 <img src="https://raw.githubusercontent.com/mineboxarabic/Quran-Project/master/screenshots/1.PNG" alt="The main page" height="300" width="450">
 ### The sourah from inside:
 <img src="../master/screenshots/1.gif" alt="The sourah from inside" height="300" width="450">
