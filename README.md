@@ -9,11 +9,15 @@ A program to read, listen to, and translate the Quran.
 
 ## Screenshots
 ### The main page
+
 <img src="https://raw.githubusercontent.com/mineboxarabic/Quran-Project/master/screenshots/1.PNG" alt="The main page" height="300" width="450"/>
-![alt text](https://raw.githubusercontent.com/mineboxarabic/Quran-Project/master/screenshots/1.PNG)
-<h3> The sourah from inside: </h3>
+
+### The sourah from inside:
+
 <img src="../master/screenshots/1.gif" alt="The sourah from inside" height="300" width="450">
+
 ### The different pages:
+
 <img src="../master/screenshots/2.gif" alt="The sourah from inside" height="300" width="450">
 
 
